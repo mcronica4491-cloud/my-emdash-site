@@ -2,13 +2,13 @@
 	"$schema": "https://emdashcms.com/seed.schema.json",
 	"version": "1",
 	"meta": {
-		"name": "Blog Starter",
-		"description": "A blog with posts and pages",
-		"author": "EmDash"
+		"name": "Based Movie Reviews",
+		"description": "Sharp, spirited reviews for people who love the movies",
+		"author": "Based Movie Reviews"
 	},
 	"settings": {
-		"title": "My Blog",
-		"tagline": "Thoughts on building for the web"
+		"title": "Based Movie Reviews",
+		"tagline": "Big-screen opinions. No studio notes."
 	},
 	"collections": [
 		{
@@ -25,6 +25,33 @@
 					"type": "string",
 					"required": true,
 					"searchable": true
+				},
+				{
+					"slug": "film_title",
+					"label": "Film Title",
+					"type": "string",
+					"searchable": true
+				},
+				{
+					"slug": "director",
+					"label": "Director",
+					"type": "string"
+				},
+				{
+					"slug": "release_year",
+					"label": "Release Year",
+					"type": "integer"
+				},
+				{
+					"slug": "runtime_minutes",
+					"label": "Runtime (minutes)",
+					"type": "integer"
+				},
+				{
+					"slug": "score",
+
+					"label": "Score (out of 10)",
+					"type": "number"
 				},
 				{
 					"slug": "featured_image",
@@ -70,22 +97,34 @@
 	"taxonomies": [
 		{
 			"name": "category",
-			"label": "Categories",
-			"labelSingular": "Category",
+			"label": "Genres",
+			"labelSingular": "Genre",
 			"hierarchical": true,
 			"collections": ["posts"],
 			"terms": [
 				{
-					"slug": "development",
-					"label": "Development"
+					"slug": "action",
+					"label": "Action"
 				},
 				{
-					"slug": "design",
-					"label": "Design"
+					"slug": "drama",
+					"label": "Drama"
 				},
 				{
-					"slug": "notes",
-					"label": "Notes"
+					"slug": "comedy",
+					"label": "Comedy"
+				},
+				{
+					"slug": "science-fiction",
+					"label": "Science Fiction"
+				},
+				{
+					"slug": "thriller",
+					"label": "Thriller"
+				},
+				{
+					"slug": "animation",
+					"label": "Animation"
 				}
 			]
 		},
@@ -97,20 +136,20 @@
 			"collections": ["posts"],
 			"terms": [
 				{
-					"slug": "webdev",
-					"label": "Web Development"
+					"slug": "new-release",
+					"label": "New Release"
 				},
 				{
-					"slug": "opinion",
-					"label": "Opinion"
+					"slug": "rewatch",
+					"label": "Rewatch"
 				},
 				{
-					"slug": "tools",
-					"label": "Tools"
+					"slug": "cult-classic",
+					"label": "Cult Classic"
 				},
 				{
-					"slug": "creativity",
-					"label": "Creativity"
+					"slug": "spoiler-free",
+					"label": "Spoiler Free"
 				}
 			]
 		}
@@ -118,13 +157,13 @@
 	"bylines": [
 		{
 			"id": "byline-editorial",
-			"slug": "emdash-editorial",
-			"displayName": "EmDash Editorial"
+			"slug": "based-movie-reviews",
+			"displayName": "Based Movie Reviews"
 		},
 		{
 			"id": "byline-guest",
-			"slug": "guest-contributor",
-			"displayName": "Guest Contributor",
+			"slug": "guest-critic",
+			"displayName": "Guest Critic",
 			"isGuest": true
 		}
 	],
@@ -140,13 +179,13 @@
 				},
 				{
 					"type": "custom",
-					"label": "About",
-					"url": "/pages/about"
+					"label": "Reviews",
+					"url": "/posts"
 				},
 				{
 					"type": "custom",
-					"label": "Posts",
-					"url": "/posts"
+					"label": "About",
+					"url": "/pages/about"
 				}
 			]
 		}
@@ -155,7 +194,7 @@
 		{
 			"name": "sidebar",
 			"label": "Sidebar",
-			"description": "Widget area displayed on single post pages",
+			"description": "Film discovery widgets displayed alongside reviews",
 			"widgets": [
 				{
 					"type": "component",
@@ -165,7 +204,7 @@
 				{
 					"type": "component",
 					"componentId": "core:categories",
-					"title": "Categories"
+					"title": "Genres"
 				},
 				{
 					"type": "component",
@@ -207,7 +246,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A blog about software, design, and the occasional stray thought.",
+									"text": "Big-screen opinions. No studio notes. Independent film reviews for the love of the picture.",
 									"_key": "k1"
 								}
 							],
@@ -255,7 +294,7 @@
 		{
 			"slug": "about-author",
 			"title": "About the Author",
-			"description": "Brief author bio for use in posts or pages",
+			"description": "Editorial note for use on review pages",
 			"keywords": ["author", "bio", "about"],
 			"source": "theme",
 			"content": [
@@ -265,7 +304,7 @@
 					"children": [
 						{
 							"_type": "span",
-							"text": "A software developer who writes about building things on the web. Based somewhere with good coffee and reliable internet.",
+							"text": "A lifelong moviegoer writing honest reviews from the cheap seats to the front row.",
 							"_key": "k1"
 						}
 					],
@@ -289,7 +328,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "A place for writing about software, design, and the occasional stray thought. No posting schedule, no newsletter funnel. Just things I wanted to write down.",
+									"text": "Based Movie Reviews is an independent film journal for people who still believe the best argument is the one you can make after the credits roll. We write with conviction, curiosity, and zero studio notes.",
 									"_key": "k1"
 								}
 							],
@@ -301,7 +340,7 @@
 							"children": [
 								{
 									"_type": "span",
-									"text": "Built with Astro and EmDash. The source is open if you want to see how it works.",
+									"text": "Every review is one person's honest take. Scores are out of ten, spoilers are clearly marked, and great cinema is welcome from every era.",
 									"_key": "k3"
 								}
 							],

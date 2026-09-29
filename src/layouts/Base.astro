@@ -88,6 +88,7 @@ const isLoggedIn = !!Astro.locals.user;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<Font cssVariable="--font-body" preload />
+		<Font cssVariable="--font-heading" />
 		<Font cssVariable="--font-mono" />
 		<title>{fullTitle}</title>
 		<EmDashHead page={pageCtx} />
@@ -109,7 +110,7 @@ const isLoggedIn = !!Astro.locals.user;
 		<EmDashBodyStart page={pageCtx} />
 		<header class="site-header">
 			<nav class="nav">
-				<a href="/" class="site-title">
+				<a href="/" class="site-title" aria-label="Based Movie Reviews home">
 					{
 						siteLogo ? (
 							<img
@@ -118,7 +119,13 @@ const isLoggedIn = !!Astro.locals.user;
 								class="site-logo-img"
 							/>
 						) : (
-							siteTitle
+							<>
+								<span class="brand-stamp" aria-hidden="true">BMR</span>
+								<span class="brand-name">
+									<span>BASED</span>
+									<strong>MOVIE REVIEWS</strong>
+								</span>
+							</>
 						)
 					}
 				</a>
@@ -141,7 +148,7 @@ const isLoggedIn = !!Astro.locals.user;
 										item.target === "_blank" ? "noopener noreferrer" : undefined
 									}
 								>
-									{item.label}
+									{item.label === "Posts" ? "Reviews" : item.label}
 								</a>
 							))
 						}
@@ -165,7 +172,7 @@ const isLoggedIn = !!Astro.locals.user;
 			<div class="footer-inner">
 				<div class="footer-grid">
 					<div class="footer-brand">
-						<a href="/" class="footer-logo">
+						<a href="/" class="footer-logo" aria-label="Based Movie Reviews home">
 							{
 								siteLogo ? (
 									<img
@@ -174,7 +181,13 @@ const isLoggedIn = !!Astro.locals.user;
 										class="footer-logo-img"
 									/>
 								) : (
-									siteTitle
+									<>
+										<span class="brand-stamp" aria-hidden="true">BMR</span>
+										<span class="brand-name">
+											<span>BASED</span>
+											<strong>MOVIE REVIEWS</strong>
+										</span>
+									</>
 								)
 							}
 						</a>
@@ -195,7 +208,7 @@ const isLoggedIn = !!Astro.locals.user;
 													: undefined
 											}
 										>
-											{item.label}
+											{item.label === "Posts" ? "Reviews" : item.label}
 										</a>
 									</li>
 								))
@@ -484,15 +497,47 @@ const isLoggedIn = !!Astro.locals.user;
 			}
 
 			.site-title {
-				font-size: var(--font-size-lg);
-				font-weight: 600;
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
 				color: var(--color-text);
 				text-decoration: none;
-				letter-spacing: var(--tracking-snug);
+				letter-spacing: 0;
+				flex-shrink: 0;
 			}
 
 			.site-title:hover {
 				color: var(--color-brand);
+			}
+
+			.brand-stamp {
+				display: grid;
+				place-items: center;
+				width: 40px;
+				aspect-ratio: 1;
+				background: var(--color-brand);
+				color: var(--color-on-brand);
+				font-family: var(--font-mono);
+				font-size: 11px;
+				font-weight: 700;
+				line-height: 1;
+				box-shadow: 3px 3px 0 var(--color-text);
+			}
+
+			.brand-name {
+				display: grid;
+				gap: 1px;
+				font-family: var(--font-body);
+				font-size: 10px;
+				font-weight: 600;
+				line-height: 1.1;
+				letter-spacing: 0.08em;
+			}
+
+			.brand-name strong {
+				font-size: 12px;
+				font-weight: 700;
+				letter-spacing: 0;
 			}
 
 			.site-logo-img {
@@ -667,11 +712,12 @@ const isLoggedIn = !!Astro.locals.user;
 			}
 
 			.footer-logo {
-				font-size: var(--font-size-lg);
-				font-weight: 600;
+				display: inline-flex;
+				align-items: center;
+				gap: 10px;
 				color: var(--color-text);
 				text-decoration: none;
-				letter-spacing: var(--tracking-snug);
+				letter-spacing: 0;
 			}
 
 			.footer-logo-img {

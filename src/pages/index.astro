@@ -79,14 +79,32 @@ function formatDate(date: Date | null | undefined) {
 	{
 		posts.length === 0 ? (
 			<section class="empty-state">
-				<h1>No posts yet</h1>
-				<p>Create your first post in the admin panel.</p>
+				<p class="intro-kicker">THE HOUSE IS OPEN</p>
+				<h1>The marquee is waiting.</h1>
+				<p>Put the first film on the record. Your review starts here.</p>
 				<a href="/_emdash/admin/content/posts/new" class="btn">
 					Create a post
 				</a>
 			</section>
 		) : (
 			<div class="home-content">
+				<section class="journal-intro" aria-labelledby="journal-title">
+					<div class="intro-copy">
+						<p class="intro-kicker">INDEPENDENT FILM JOURNAL <span>VOL. 01</span></p>
+						<h1 id="journal-title">Cinema, without<br /><em>the polite applause.</em></h1>
+						<p class="intro-deck">Big-screen opinions, properly argued. No studio notes. No consensus required.</p>
+						<a class="intro-link" href="/posts">Read the reviews <span aria-hidden="true">↗</span></a>
+					</div>
+					<figure class="intro-stamp">
+						<img
+							src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=720&q=85"
+							alt="An empty movie theatre ready for the opening credits"
+							loading="eager"
+						/>
+						<figcaption><span>NO</span><strong>STUDIO</strong><span>NOTES</span></figcaption>
+					</figure>
+				</section>
+
 				{/* Featured Post - Side by side */}
 				{featuredPost && (
 					<section class="featured-section">
@@ -97,6 +115,20 @@ function formatDate(date: Date | null | undefined) {
 								</div>
 							</a>
 							<div class="featured-content">
+								<div class="featured-kicker">
+									<span>NOW SHOWING</span>
+									{typeof featuredPost.data.score === "number" && (
+										<span class="featured-score">
+											<strong>{featuredPost.data.score.toFixed(1)}</strong><small>/10</small>
+										</span>
+									)}
+								</div>
+								{featuredPost.data.film_title && (
+									<p class="featured-film-title">
+										{featuredPost.data.film_title}
+										{featuredPost.data.release_year && <span> ({featuredPost.data.release_year})</span>}
+									</p>
+								)}
 								<div class="featured-meta">
 									{featuredBylines.length > 0 && (
 										<>
@@ -162,7 +194,7 @@ function formatDate(date: Date | null | undefined) {
 				{gridPostsWithTags.length > 0 && (
 					<section class="posts-section">
 						<header class="section-header">
-							<h2 class="section-title">Latest</h2>
+										<h2 class="section-title">Fresh reviews</h2>
 							{hasMorePosts && (
 								<a href="/posts" class="section-link">
 									View all
@@ -178,6 +210,9 @@ function formatDate(date: Date | null | undefined) {
 									href={`/posts/${post.id}`}
 									date={post.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(post.data.content)}
+										filmTitle={post.data.film_title}
+										releaseYear={post.data.release_year}
+										score={post.data.score}
 									tags={tags}
 									bylines={bylines}
 									edit={post.edit}
@@ -461,6 +496,248 @@ function formatDate(date: Date | null | undefined) {
 		.posts-grid {
 			grid-template-columns: 1fr;
 			gap: var(--spacing-8);
+		}
+	}
+
+	.journal-intro {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 150px;
+		align-items: center;
+		gap: var(--spacing-8);
+		padding: var(--spacing-10) 0 var(--spacing-12);
+		border-bottom: 1px solid var(--color-text);
+		margin-bottom: var(--spacing-12);
+	}
+
+	.intro-kicker {
+		display: flex;
+		align-items: center;
+		gap: var(--spacing-3);
+		color: var(--color-brand);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+	}
+
+	.intro-kicker span {
+		color: var(--color-muted);
+	}
+
+	.journal-intro h1 {
+		margin-top: var(--spacing-4);
+		font-size: 4.25rem;
+		font-weight: 500;
+		line-height: 0.98;
+	}
+
+	.journal-intro h1 em {
+		color: var(--color-brand);
+		font-weight: 500;
+	}
+
+	.intro-deck {
+		max-width: 470px;
+		margin-top: var(--spacing-4);
+		color: var(--color-text-secondary);
+		font-size: var(--font-size-lg);
+	}
+
+	.intro-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--spacing-2);
+		margin-top: var(--spacing-5);
+		padding-bottom: 3px;
+		border-bottom: 1px solid currentColor;
+		color: var(--color-text) !important;
+		font-size: var(--font-size-sm);
+		font-weight: 700;
+	}
+
+	.intro-link span {
+		color: var(--color-brand);
+		font-size: 1.1rem;
+	}
+
+	.intro-stamp {
+		position: relative;
+		isolation: isolate;
+		display: grid;
+		place-items: end center;
+		width: 160px;
+		aspect-ratio: 4 / 3;
+		margin: 0;
+		overflow: hidden;
+		background: var(--color-text);
+		transform: rotate(2deg);
+	}
+
+	.intro-stamp::after {
+		position: absolute;
+		z-index: -1;
+		inset: 0;
+		background: linear-gradient(0deg, rgb(0 0 0 / 78%), rgb(0 0 0 / 5%) 80%);
+		content: "";
+	}
+
+	.intro-stamp img {
+		position: absolute;
+		z-index: -2;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	.intro-stamp figcaption {
+		display: grid;
+		padding-bottom: 12px;
+		color: white;
+		font-family: var(--font-mono);
+		font-size: 0.6rem;
+		line-height: 1.25;
+		letter-spacing: 0.08em;
+		text-align: center;
+	}
+
+	.intro-stamp strong {
+		font-size: 1rem;
+		letter-spacing: 0;
+	}
+
+	.featured-grid {
+		grid-template-columns: minmax(0, 1.7fr) minmax(260px, 0.9fr);
+		gap: var(--spacing-10);
+	}
+
+	.featured-image-link {
+		grid-column: 1;
+		margin-left: 0;
+	}
+
+	.featured-image img {
+		aspect-ratio: 1.55 / 1;
+	}
+
+	.featured-kicker {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		color: var(--color-brand);
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		letter-spacing: 0.1em;
+	}
+
+	.featured-score {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 3px;
+		padding: 5px 8px;
+		background: var(--color-text);
+		color: var(--color-bg);
+		letter-spacing: 0;
+	}
+
+	.featured-score strong {
+		font-family: var(--font-heading);
+		font-size: 1.2rem;
+	}
+
+	.featured-score small {
+		font-size: 0.65rem;
+	}
+
+	.featured-film-title {
+		font-family: var(--font-heading);
+		font-size: var(--font-size-xl);
+		font-weight: 600;
+	}
+
+	.featured-film-title span {
+		color: var(--color-muted);
+		font-family: var(--font-body);
+		font-size: var(--font-size-sm);
+		font-weight: 500;
+	}
+
+	.featured-title {
+		font-size: 3rem;
+		font-weight: 600;
+		line-height: 1.03;
+		letter-spacing: 0;
+	}
+
+	.featured-meta {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+	}
+
+	.section-title {
+		color: var(--color-text);
+		font-family: var(--font-heading);
+		font-size: var(--font-size-2xl);
+		font-weight: 600;
+		letter-spacing: 0;
+		text-transform: none;
+	}
+
+	.posts-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: var(--spacing-10) var(--spacing-6);
+	}
+
+	.empty-state {
+		max-width: 620px;
+		padding: var(--spacing-24) var(--spacing-6);
+	}
+
+	.empty-state h1 {
+		font-size: var(--font-size-4xl);
+	}
+
+	@media (max-width: 900px) {
+		.featured-grid {
+			grid-template-columns: minmax(0, 1.25fr) minmax(220px, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.home-content {
+			padding-inline: var(--spacing-5);
+		}
+
+		.journal-intro {
+			grid-template-columns: minmax(0, 1fr);
+			padding: var(--spacing-8) 0;
+			margin-bottom: var(--spacing-8);
+		}
+
+		.journal-intro h1 {
+			font-size: 2.65rem;
+		}
+
+		.intro-stamp {
+			width: 112px;
+			aspect-ratio: 1.4 / 1;
+			justify-self: start;
+		}
+
+		.featured-grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: var(--spacing-6);
+		}
+
+		.featured-image-link {
+			margin-left: 0;
+		}
+
+		.featured-image {
+			border-radius: var(--radius-lg);
+		}
+
+		.featured-title {
+			font-size: 2.3rem;
 		}
 	}
 </style>

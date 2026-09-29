@@ -12,13 +12,20 @@ export interface BlogSiteIdentitySettings {
 	favicon?: MediaReference;
 }
 
-const DEFAULT_SITE_TITLE = "My Blog";
-const DEFAULT_SITE_TAGLINE = "Thoughts, stories, and ideas.";
+const DEFAULT_SITE_TITLE = "Based Movie Reviews";
+const DEFAULT_SITE_TAGLINE = "Big-screen opinions. No studio notes.";
 
 export function resolveBlogSiteIdentity(settings?: BlogSiteIdentitySettings) {
+	const title = settings?.title && settings.title !== "My Blog"
+		? settings.title
+		: DEFAULT_SITE_TITLE;
+	const tagline = settings?.tagline && settings.tagline !== "Thoughts on building for the web"
+		? settings.tagline
+		: DEFAULT_SITE_TAGLINE;
+
 	return {
-		siteTitle: settings?.title ?? DEFAULT_SITE_TITLE,
-		siteTagline: settings?.tagline ?? DEFAULT_SITE_TAGLINE,
+		siteTitle: title,
+		siteTagline: tagline,
 		siteLogo: settings?.logo?.url ? settings.logo : null,
 	};
 }

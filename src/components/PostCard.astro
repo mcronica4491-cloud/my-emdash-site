@@ -9,6 +9,9 @@ interface Props {
 	href: string;
 	date?: Date;
 	readingTime?: number;
+	filmTitle?: string;
+	releaseYear?: number;
+	score?: number;
 	tags?: Array<{ slug: string; label: string }>;
 	bylines?: ContentBylineCredit[];
 	edit?: EditProxy;
@@ -21,6 +24,9 @@ const {
 	href,
 	date,
 	readingTime,
+	filmTitle,
+	releaseYear,
+	score,
 	tags,
 	bylines,
 	edit,
@@ -41,12 +47,28 @@ const formattedDate = date
 			featuredImage ? (
 				<div class="card-image" {...edit?.featured_image}>
 					<Image image={featuredImage} />
+					{typeof score === "number" && (
+						<span class="card-score" aria-label={`Rated ${score} out of 10`}>
+							<strong>{score.toFixed(1)}</strong><small>/10</small>
+						</span>
+					)}
 				</div>
 			) : (
-				<div class="card-placeholder" />
+				<div class="card-placeholder">
+					{typeof score === "number" && (
+						<span class="card-score" aria-label={`Rated ${score} out of 10`}>
+							<strong>{score.toFixed(1)}</strong><small>/10</small>
+						</span>
+					)}
+				</div>
 			)
 		}
 		<div class="card-body">
+			{filmTitle && (
+				<p class="card-film-title">
+					{filmTitle}{releaseYear && <span> ({releaseYear})</span>}
+				</p>
+			)}
 			<div class="card-meta">
 				{
 					bylines && bylines.length > 0 && (
@@ -121,6 +143,7 @@ const formattedDate = date
 	}
 
 	.card-image {
+		position: relative;
 		aspect-ratio: 16 / 10;
 		overflow: hidden;
 		border-radius: var(--radius-lg);
@@ -140,10 +163,50 @@ const formattedDate = date
 	}
 
 	.card-placeholder {
+		position: relative;
 		aspect-ratio: 16 / 10;
 		border-radius: var(--radius-lg);
-		background: var(--color-surface);
+		background:
+			linear-gradient(135deg, color-mix(in srgb, var(--color-brand) 18%, transparent), transparent 58%),
+			repeating-linear-gradient(135deg, var(--color-bg-subtle) 0 12px, var(--color-surface) 12px 24px);
 		margin-bottom: var(--spacing-4);
+	}
+
+	.card-score {
+		position: absolute;
+		top: 12px;
+		left: 12px;
+		display: inline-flex;
+		align-items: baseline;
+		gap: 3px;
+		padding: 6px 9px;
+		background: var(--color-text);
+		color: var(--color-bg);
+		line-height: 1;
+	}
+
+	.card-score strong {
+		font-family: var(--font-heading);
+		font-size: 1.25rem;
+	}
+
+	.card-score small {
+		font-size: 0.65rem;
+		color: var(--color-muted);
+	}
+
+	.card-film-title {
+		margin-bottom: var(--spacing-1);
+		font-family: var(--font-heading);
+		font-size: var(--font-size-lg);
+		font-weight: 600;
+	}
+
+	.card-film-title span {
+		color: var(--color-muted);
+		font-family: var(--font-body);
+		font-size: var(--font-size-sm);
+		font-weight: 500;
 	}
 
 	.card-body {
@@ -174,10 +237,10 @@ const formattedDate = date
 	}
 
 	.card-title {
-		font-size: var(--font-size-xl);
+		font-size: var(--font-size-2xl);
 		font-weight: var(--font-weight-heading);
 		line-height: var(--leading-snug);
-		letter-spacing: var(--tracking-snug);
+		letter-spacing: 0;
 		margin-bottom: var(--spacing-2);
 		transition: color var(--transition-fast);
 	}

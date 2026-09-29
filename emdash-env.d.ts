@@ -27,6 +27,11 @@ export interface Post {
   featured_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
   content?: PortableTextBlock[];
   excerpt?: string;
+  film_title?: string;
+  director?: string;
+  release_year?: number;
+  runtime_minutes?: number;
+  score?: number;
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;

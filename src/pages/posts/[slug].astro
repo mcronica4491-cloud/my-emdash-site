@@ -225,6 +225,26 @@ const publishDate =
 							</p>
 						)
 					}
+					{
+						(post.data.film_title || post.data.director || post.data.release_year || post.data.runtime_minutes || typeof post.data.score === "number") && (
+							<section class="review-facts" aria-label="Film details">
+								<div class="review-facts-heading">
+									<span class="facts-kicker">THE FILM</span>
+									{post.data.film_title && <h2>{post.data.film_title}</h2>}
+								</div>
+								<dl class="facts-list">
+									{post.data.director && <div><dt>Directed by</dt><dd>{post.data.director}</dd></div>}
+									{post.data.release_year && <div><dt>Released</dt><dd>{post.data.release_year}</dd></div>}
+									{post.data.runtime_minutes && <div><dt>Runtime</dt><dd>{post.data.runtime_minutes} min</dd></div>}
+								</dl>
+								{typeof post.data.score === "number" && (
+									<div class="review-verdict" aria-label={`Rated ${post.data.score} out of 10`}>
+										<strong>{post.data.score.toFixed(1)}</strong><span>/ 10</span>
+									</div>
+								)}
+							</section>
+						)
+					}
 				</header>
 
 				<div class="article-content">
@@ -269,6 +289,9 @@ const publishDate =
 									href={`/posts/${p.id}`}
 									date={p.data.publishedAt ?? undefined}
 									readingTime={getReadingTime(p.data.content)}
+									filmTitle={p.data.film_title}
+									releaseYear={p.data.release_year}
+									score={p.data.score}
 									tags={postTags.map((t) => ({ slug: t.slug, label: t.label }))}
 									bylines={postBylines}
 									edit={p.edit}
@@ -963,6 +986,131 @@ const publishDate =
 
 		.more-grid {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	.article-hero {
+		margin-top: var(--spacing-10);
+		border: 1px solid var(--color-border);
+	}
+
+	.article-hero img {
+		max-height: 620px;
+		aspect-ratio: 2 / 1;
+		object-fit: cover;
+	}
+
+	.article-grid {
+		margin-top: var(--spacing-12);
+	}
+
+	.article-title {
+		font-family: var(--font-heading);
+		font-size: 3.5rem;
+		font-weight: 600;
+		letter-spacing: 0;
+		line-height: 1.02;
+	}
+
+	.article-meta {
+		font-family: var(--font-mono);
+		font-size: 0.68rem !important;
+	}
+
+	.article-excerpt {
+		font-size: var(--font-size-lg);
+	}
+
+	.review-facts {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto auto;
+		align-items: center;
+		gap: var(--spacing-5);
+		padding: var(--spacing-4);
+		margin-top: var(--spacing-6);
+		background: var(--color-bg-subtle);
+		border-block: 1px solid var(--color-border);
+	}
+
+	.facts-kicker {
+		color: var(--color-brand);
+		font-family: var(--font-mono);
+		font-size: 0.64rem;
+		letter-spacing: 0.1em;
+	}
+
+	.review-facts-heading h2 {
+		margin-top: 3px;
+		font-family: var(--font-heading);
+		font-size: var(--font-size-xl);
+		font-weight: 600;
+		letter-spacing: 0;
+	}
+
+	.facts-list {
+		display: grid;
+		grid-template-columns: repeat(2, auto);
+		gap: var(--spacing-2) var(--spacing-4);
+	}
+
+	.facts-list div {
+		display: grid;
+		gap: 2px;
+	}
+
+	.facts-list dt {
+		color: var(--color-muted);
+		font-family: var(--font-mono);
+		font-size: 0.58rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.facts-list dd {
+		font-size: var(--font-size-sm);
+		font-weight: 600;
+	}
+
+	.review-verdict {
+		display: grid;
+		place-items: center;
+		align-content: center;
+		min-width: 66px;
+		aspect-ratio: 1;
+		background: var(--color-brand);
+		color: var(--color-on-brand);
+		line-height: 1;
+	}
+
+	.review-verdict strong {
+		font-family: var(--font-heading);
+		font-size: 1.65rem;
+	}
+
+	.review-verdict span {
+		font-family: var(--font-mono);
+		font-size: 0.58rem;
+	}
+
+	@media (max-width: 600px) {
+		.article-title {
+			font-size: 2.65rem;
+		}
+
+		.review-facts {
+			grid-template-columns: minmax(0, 1fr) auto;
+			gap: var(--spacing-3);
+		}
+
+		.facts-list {
+			grid-column: 1 / -1;
+			grid-row: 2;
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.review-verdict {
+			grid-column: 2;
+			grid-row: 1;
 		}
 	}
 </style>

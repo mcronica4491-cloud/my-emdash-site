@@ -21,10 +21,17 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: "Inter",
+			name: "DM Sans",
 			cssVariable: "--font-body",
 			weights: [400, 500, 600, 700],
 			fallbacks: ["sans-serif"],
+		},
+		{
+			provider: fontProviders.google(),
+			name: "Bodoni Moda",
+			cssVariable: "--font-heading",
+			weights: [500, 600, 700],
+			fallbacks: ["Georgia", "serif"],
 		},
 		{
 			provider: fontProviders.google(),

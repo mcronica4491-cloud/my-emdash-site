@@ -25,6 +25,82 @@
 */
 
 :root {
+  --color-bg: light-dark(#f4f0e7, #171715);
+  --color-bg-subtle: light-dark(#eae4d8, #201f1c);
+  --color-text: light-dark(#20211e, #f4efe5);
+  --color-text-secondary: light-dark(#56554f, #c1bdb3);
+  --color-muted: light-dark(#827c70, #938d81);
+  --color-border: light-dark(#d8d0c1, #393630);
+  --color-border-subtle: light-dark(#e5ded1, #2d2b26);
+  --color-surface: light-dark(#fffdf8, #22211e);
+  --color-brand: light-dark(#c43d2b, #ff8068);
+  --color-brand-hover: light-dark(#9f2b20, #ff9b83);
+  --color-on-brand: #fffaf0;
+  --color-brand-ring: color-mix(in srgb, var(--color-brand) 24%, transparent);
+  --font-heading: "Bodoni Moda", Georgia, serif;
+  --font-weight-heading: 600;
+  --font-weight-display: 600;
+  --tracking-tight: 0;
+  --tracking-snug: 0;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.12em;
+  --radius: 2px;
+  --radius-lg: 4px;
+  --content-width: 720px;
+  --wide-width: 1280px;
+  --gutter-width: 180px;
+  --meta-col-width: 160px;
+  --search-input-width: 170px;
+  --emdash-search-bg: var(--color-bg);
+  --emdash-search-text: var(--color-text);
+  --emdash-search-muted: var(--color-muted);
+  --emdash-search-border: var(--color-border);
+  --emdash-search-hover: var(--color-bg-subtle);
+  --emdash-search-highlight: var(--color-brand);
+}
+
+@supports not (color: light-dark(#000, #fff)) {
+  :root {
+    color-scheme: light;
+    --color-bg: #f4f0e7;
+    --color-bg-subtle: #eae4d8;
+    --color-text: #20211e;
+    --color-text-secondary: #56554f;
+    --color-muted: #827c70;
+    --color-border: #d8d0c1;
+    --color-border-subtle: #e5ded1;
+    --color-surface: #fffdf8;
+    --color-brand: #c43d2b;
+    --color-brand-hover: #9f2b20;
+  }
+}
+
+body {
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 5px, color-mix(in srgb, var(--color-text) 1.5%, transparent) 5px 6px),
+    linear-gradient(135deg, color-mix(in srgb, var(--color-bg-subtle) 48%, transparent), transparent 42%);
+}
+
+.site-header {
+  background: color-mix(in srgb, var(--color-bg) 92%, transparent) !important;
+  border-bottom: 1px solid var(--color-text) !important;
+}
+
+.nav-links a {
+  font-size: 0.8rem !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.site-footer {
+  background: var(--color-bg-subtle) !important;
+  border-top-color: var(--color-text) !important;
+}
+
+::selection {
+  background: var(--color-brand);
+  color: var(--color-on-brand);
 }
 
 /* Keep the signed-in Admin link separated from the primary navigation. */

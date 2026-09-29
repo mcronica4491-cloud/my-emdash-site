@@ -50,10 +50,10 @@ const filteredPosts = posts.map((post) => ({
 }));
 ---
 
-<Base title={`${term.label} posts`} description={`All posts in ${term.label}`}>
+<Base title={`${term.label} reviews`} description={`Movie reviews in ${term.label}`}>
 	<section class="archive-section">
 		<header class="archive-header">
-			<span class="archive-label">Category</span>
+			<span class="archive-label">Genre</span>
 			<h1 class="archive-title">{term.label}</h1>
 		</header>
 
@@ -70,6 +70,9 @@ const filteredPosts = posts.map((post) => ({
 							href={`/posts/${post.id}`}
 							date={post.data.publishedAt ?? undefined}
 							readingTime={getReadingTime(post.data.content)}
+							filmTitle={post.data.film_title}
+							releaseYear={post.data.release_year}
+							score={post.data.score}
 							tags={tags.map((t) => ({ slug: t.slug, label: t.label }))}
 							edit={post.edit}
 						/>
